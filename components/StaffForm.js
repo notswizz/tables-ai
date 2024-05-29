@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ClientForm = ({ onSubmit }) => {
+const StaffForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
-    company: '',
-    website: '',
-    phone: '',
+    name: '',
     email: '',
-    contact: ''
+    phone: '',
+    location: 'ATL'
   });
 
   const handleChange = (e) => {
@@ -21,13 +20,12 @@ const ClientForm = ({ onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/clients', formData);
+      await axios.post('/api/staff', formData);
       setFormData({
-        company: '',
-        website: '',
-        phone: '',
+        name: '',
         email: '',
-        contact: ''
+        phone: '',
+        location: 'ATL'
       });
       if (onSubmit) onSubmit();
     } catch (error) {
@@ -38,43 +36,17 @@ const ClientForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white shadow-md rounded">
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company">
-          Company
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+          Name
         </label>
         <input
           type="text"
-          name="company"
-          id="company"
-          value={formData.company}
+          name="name"
+          id="name"
+          value={formData.name}
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="website">
-          Website
-        </label>
-        <input
-          type="text"
-          name="website"
-          id="website"
-          value={formData.website}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
-          Phone
-        </label>
-        <input
-          type="text"
-          name="phone"
-          id="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <div className="mb-4">
@@ -92,17 +64,35 @@ const ClientForm = ({ onSubmit }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="contact">
-          Contact
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+          Phone
         </label>
         <input
           type="text"
-          name="contact"
-          id="contact"
-          value={formData.contact}
+          name="phone"
+          id="phone"
+          value={formData.phone}
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+          Location
+        </label>
+        <select
+          name="location"
+          id="location"
+          value={formData.location}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required
+        >
+          <option value="ATL">ATL</option>
+          <option value="NYC">NYC</option>
+          <option value="LA">LA</option>
+          <option value="DAL">DAL</option>
+        </select>
       </div>
       <button
         type="submit"
@@ -114,4 +104,4 @@ const ClientForm = ({ onSubmit }) => {
   );
 };
 
-export default ClientForm;
+export default StaffForm;

@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from './Table';
-import ClientFormForm from './ClientForm';
+import ClientForm from './ClientForm';
+import StaffForm from './StaffForm';
 import EditableCell from './EditableCell';
 
 const TableComponent = () => {
@@ -80,7 +81,8 @@ const TableComponent = () => {
     <div>
      
       <Table columns={columns} data={data} updateData={updateData} />
-      <ClientFormForm onSubmit={handleFormSubmit} />
+      <ClientForm onSubmit={handleFormSubmit} />
+      <StaffForm onSubmit={handleFormSubmit} />
     </div>
   );
 };
