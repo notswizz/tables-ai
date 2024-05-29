@@ -81,8 +81,9 @@ const TableComponent = () => {
 
   return (
     <div>
-      <Form onSubmit={handleFormSubmit} />
+     
       <Table columns={columns} data={data} updateData={updateData} />
+      <Form onSubmit={handleFormSubmit} />
     </div>
   );
 };
