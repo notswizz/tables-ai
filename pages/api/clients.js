@@ -3,8 +3,8 @@ import clientPromise from '../../utils/mongodb';
 
 export default async (req, res) => {
   const client = await clientPromise;
-  const database = client.db('test');
-  const collection = database.collection('data');
+  const database = client.db('tsa');
+  const collection = database.collection('clients');
 
   if (req.method === 'GET') {
     try {

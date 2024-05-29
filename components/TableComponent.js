@@ -1,14 +1,14 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from './Table';
-import Form from './Form';
+import ClientFormForm from './ClientForm';
 import EditableCell from './EditableCell';
 
 const TableComponent = () => {
   const [data, setData] = useState([]);
 
   const fetchData = () => {
-    axios.get('/api/data')
+    axios.get('/api/clients')
       .then(response => {
         setData(response.data);
       })
@@ -33,7 +33,7 @@ const TableComponent = () => {
             ...old[rowIndex],
             [columnId]: value,
           };
-          axios.put('/api/data', { _id: updatedRow._id.$oid, ...updatedRow })
+          axios.put('/api/clients', { _id: updatedRow._id.$oid, ...updatedRow })
             .catch(error => {
               console.error('Error updating data:', error);
             });
@@ -46,10 +46,7 @@ const TableComponent = () => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: 'ID',
-        accessor: '_id.$oid', // accessor for nested object
-      },
+     
       {
         Header: 'Company',
         accessor: 'company',
@@ -83,7 +80,7 @@ const TableComponent = () => {
     <div>
      
       <Table columns={columns} data={data} updateData={updateData} />
-      <Form onSubmit={handleFormSubmit} />
+      <ClientFormForm onSubmit={handleFormSubmit} />
     </div>
   );
 };

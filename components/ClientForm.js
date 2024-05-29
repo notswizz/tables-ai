@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Form = ({ onSubmit }) => {
+const ClientForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -114,4 +114,4 @@ const Form = ({ onSubmit }) => {
   );
 };
 
-export default Form;
+export default ClientForm;
