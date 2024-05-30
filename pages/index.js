@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Clients from '../components/Clients';
 import Staff from '../components/Staff';
 import Shows from '../components/Shows';
+import Bookings from '../components/Bookings';
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('clients');
@@ -23,9 +24,15 @@ const HomePage = () => {
         </button>
         <button
           onClick={() => setActiveTab('shows')}
-          className={`px-4 py-2 rounded-r ${activeTab === 'shows' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-4 py-2 ${activeTab === 'shows' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
         >
           Shows
+        </button>
+        <button
+          onClick={() => setActiveTab('bookings')}
+          className={`px-4 py-2 rounded-r ${activeTab === 'bookings' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+        >
+          Bookings
         </button>
       </div>
 
@@ -33,6 +40,7 @@ const HomePage = () => {
         {activeTab === 'clients' && <Clients />}
         {activeTab === 'staff' && <Staff />}
         {activeTab === 'shows' && <Shows />}
+        {activeTab === 'bookings' && <Bookings />}
       </div>
     </div>
   );
