@@ -1,15 +1,13 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from './Table';
-import ClientForm from './ClientForm';
-import StaffForm from './StaffForm';
 import EditableCell from './EditableCell';
 
-const TableComponent = () => {
+const Clients = () => {
   const [data, setData] = useState([]);
 
   const fetchData = () => {
-    axios.get('/api/clients')
+    axios.get('/api/staff')
       .then(response => {
         setData(response.data);
       })
@@ -22,9 +20,7 @@ const TableComponent = () => {
     fetchData();
   }, []);
 
-  const handleFormSubmit = () => {
-    fetchData();
-  };
+
 
   const updateData = (rowIndex, columnId, value) => {
     setData(old =>
@@ -34,7 +30,7 @@ const TableComponent = () => {
             ...old[rowIndex],
             [columnId]: value,
           };
-          axios.put('/api/clients', { _id: updatedRow._id.$oid, ...updatedRow })
+          axios.put('/api/staff', { _id: updatedRow._id.$oid, ...updatedRow })
             .catch(error => {
               console.error('Error updating data:', error);
             });
@@ -49,13 +45,13 @@ const TableComponent = () => {
     () => [
      
       {
-        Header: 'Company',
-        accessor: 'company',
+        Header: 'Name',
+        accessor: 'name',
         Cell: EditableCell,
       },
       {
-        Header: 'Website',
-        accessor: 'website',
+        Header: 'Location',
+        accessor: 'location',
         Cell: EditableCell,
       },
       {
@@ -68,11 +64,7 @@ const TableComponent = () => {
         accessor: 'email',
         Cell: EditableCell,
       },
-      {
-        Header: 'Contact',
-        accessor: 'contact',
-        Cell: EditableCell,
-      },
+    
     ],
     []
   );
@@ -81,10 +73,9 @@ const TableComponent = () => {
     <div>
      
       <Table columns={columns} data={data} updateData={updateData} />
-      <ClientForm onSubmit={handleFormSubmit} />
-      <StaffForm onSubmit={handleFormSubmit} />
+
     </div>
   );
 };
 
-export default TableComponent;
+export default Clients;
