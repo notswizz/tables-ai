@@ -55,13 +55,13 @@ const Shows = () => {
         Cell: EditableCell,
       },
       {
-        Header: 'Phone',
-        accessor: 'phone',
+        Header: 'Start',
+        accessor: 'startDate',
         Cell: EditableCell,
       },
       {
-        Header: 'Email',
-        accessor: 'email',
+        Header: 'End',
+        accessor: 'endDate',
         Cell: EditableCell,
       },
     

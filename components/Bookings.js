@@ -59,16 +59,7 @@ const Bookings = () => {
         accessor: 'totalStaff',
         Cell: EditableCell,
       },
-      {
-        Header: 'Email',
-        accessor: 'email',
-        Cell: EditableCell,
-      },
-      {
-        Header: 'Contact',
-        accessor: 'contact',
-        Cell: EditableCell,
-      },
+    
     ],
     []
   );

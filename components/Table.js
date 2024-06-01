@@ -31,7 +31,7 @@ const EditableCell = ({
   );
 };
 
-const Table = ({ columns, data, updateData }) => {
+const Table = ({ columns, data, updateData, onRowClick }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -66,7 +66,12 @@ const Table = ({ columns, data, updateData }) => {
           {rows.map(row => {
             prepareRow(row);
             return (
-              <tr key={row.id} {...row.getRowProps()} className="hover:bg-gray-50">
+              <tr
+                key={row.id}
+                {...row.getRowProps()}
+                className="hover:bg-gray-50 cursor-pointer"
+                onClick={() => onRowClick(row)}
+              >
                 {row.cells.map(cell => (
                   <td
                     key={cell.column.id}
