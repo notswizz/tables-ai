@@ -2,9 +2,11 @@ import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from './Table';
 import EditableCell from './EditableCell';
+import Filter from './Filter';
 
 const Shows = () => {
   const [data, setData] = useState([]);
+  const [filterText, setFilterText] = useState('');
 
   const fetchData = () => {
     axios.get('/api/shows')
@@ -19,8 +21,6 @@ const Shows = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-
 
   const updateData = (rowIndex, columnId, value) => {
     setData(old =>
@@ -41,9 +41,12 @@ const Shows = () => {
     );
   };
 
+  const filteredData = useMemo(() => {
+    return data.filter(row => row.location.toLowerCase().includes(filterText.toLowerCase()));
+  }, [data, filterText]);
+
   const columns = useMemo(
     () => [
-     
       {
         Header: 'Location',
         accessor: 'location',
@@ -64,16 +67,14 @@ const Shows = () => {
         accessor: 'endDate',
         Cell: EditableCell,
       },
-    
     ],
     []
   );
 
   return (
     <div>
-     
-      <Table columns={columns} data={data} updateData={updateData} />
-
+      <Filter filterText={filterText} setFilterText={setFilterText} />
+      <Table columns={columns} data={filteredData} updateData={updateData} />
     </div>
   );
 };

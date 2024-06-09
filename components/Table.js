@@ -26,12 +26,12 @@ const EditableCell = ({
       value={value}
       onChange={onChange}
       onBlur={onBlur}
-      className="border px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm text-gray-700"
     />
   );
 };
 
-const Table = ({ columns, data, updateData, onRowClick }) => {
+const Table = ({ columns, data, updateData, onRowClick = () => {} }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -46,15 +46,15 @@ const Table = ({ columns, data, updateData, onRowClick }) => {
 
   return (
     <div className="overflow-x-auto">
-      <table {...getTableProps()} className="min-w-full bg-white shadow-md rounded-lg">
-        <thead>
+      <table {...getTableProps()} className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
+        <thead className="bg-gradient-to-r from-pink-500 to-pink-600 text-white">
           {headerGroups.map(headerGroup => (
             <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
                 <th
                   key={column.id}
                   {...column.getHeaderProps()}
-                  className="py-2 px-4 bg-gray-100 border-b border-gray-200 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+                  className="py-3 px-6 text-left text-xs font-semibold uppercase tracking-wider border-b border-pink-700"
                 >
                   {column.render('Header')}
                 </th>
@@ -62,25 +62,32 @@ const Table = ({ columns, data, updateData, onRowClick }) => {
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
+        <tbody {...getTableBodyProps()} className="bg-white">
           {rows.map(row => {
             prepareRow(row);
             return (
               <tr
                 key={row.id}
                 {...row.getRowProps()}
-                className="hover:bg-gray-50 cursor-pointer"
-                onClick={() => onRowClick(row)}
+                className="hover:bg-gray-100 transition-colors duration-200"
               >
                 {row.cells.map(cell => (
                   <td
                     key={cell.column.id}
                     {...cell.getCellProps()}
-                    className="py-2 px-4 text-sm leading-5 text-gray-700 border-b border-gray-200"
+                    className="py-3 px-6 text-sm text-gray-700 border-b border-gray-200"
                   >
                     {cell.render('Cell', { updateData })}
                   </td>
                 ))}
+                <td className="py-3 px-6 text-sm text-gray-700 border-b border-gray-200">
+                  <button
+                    onClick={() => onRowClick(row)}
+                    className="bg-pink-100 text-pink-600 px-4 py-2 rounded-md border border-pink-500 hover:bg-pink-200 transition-colors duration-200"
+                  >
+                    Details
+                  </button>
+                </td>
               </tr>
             );
           })}

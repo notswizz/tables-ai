@@ -3,12 +3,14 @@ import axios from 'axios';
 import Table from './Table';
 import EditableCell from './EditableCell';
 import CustomModal from './Modal';
+import Filter from './Filter';
 
 const Staff = () => {
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [filterText, setFilterText] = useState('');
 
   const fetchData = () => {
     axios.get('/api/staff')
@@ -35,6 +37,8 @@ const Staff = () => {
   }, []);
 
   const updateData = (rowIndex, columnId, value) => {
+    const oldName = data[rowIndex].name;
+
     setData(old =>
       old.map((row, index) => {
         if (index === rowIndex) {
@@ -42,16 +46,47 @@ const Staff = () => {
             ...old[rowIndex],
             [columnId]: value,
           };
+
+          // Update staff data
           axios.put('/api/staff', { _id: updatedRow._id.$oid, ...updatedRow })
             .catch(error => {
-              console.error('Error updating data:', error);
+              console.error('Error updating staff:', error);
             });
+
+          // Update bookings if the name was changed
+          if (columnId === 'name' && oldName !== value) {
+            updateBookings(oldName, value);
+          }
+
           return updatedRow;
         }
         return row;
       })
     );
   };
+
+  const updateBookings = async (oldName, newName) => {
+    try {
+      const { data: bookings } = await axios.get('/api/bookings', { params: { staff: oldName } });
+
+      await Promise.all(
+        bookings.map(booking => {
+          const updatedStaffNeeded = booking.staffNeeded.map(day => ({
+            ...day,
+            staffNames: day.staffNames.map(name => name === oldName ? newName : name)
+          }));
+
+          return axios.put('/api/bookings', { ...booking, staffNeeded: updatedStaffNeeded });
+        })
+      );
+    } catch (error) {
+      console.error('Error updating bookings:', error);
+    }
+  };
+
+  const filteredData = useMemo(() => {
+    return data.filter(row => row.name.toLowerCase().includes(filterText.toLowerCase()));
+  }, [data, filterText]);
 
   const columns = useMemo(
     () => [
@@ -121,7 +156,8 @@ const Staff = () => {
 
   return (
     <div>
-      <Table columns={columns} data={data} updateData={updateData} onRowClick={handleRowClick} />
+      <Filter filterText={filterText} setFilterText={setFilterText} />
+      <Table columns={columns} data={filteredData} updateData={updateData} onRowClick={handleRowClick} />
 
       <CustomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedEntry && (
