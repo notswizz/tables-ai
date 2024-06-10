@@ -62,9 +62,10 @@ const Shows = () => {
         accessor: 'startDate',
         Cell: EditableCell,
       },
+     
       {
-        Header: 'End',
-        accessor: 'endDate',
+        Header: 'Show Type',
+        accessor: 'showType',
         Cell: EditableCell,
       },
     ],

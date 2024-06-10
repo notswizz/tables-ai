@@ -9,6 +9,8 @@ const ShowForm = ({ onSubmit }) => {
     season: '',
     startDate: new Date(),
     endDate: new Date(),
+    showType: '',
+    dates: []
   });
 
   const handleChange = (e) => {
@@ -26,6 +28,15 @@ const ShowForm = ({ onSubmit }) => {
     });
   };
 
+  const handleDateArrayChange = (index, value) => {
+    const updatedDates = [...formData.dates];
+    updatedDates[index].type = value;
+    setFormData({
+      ...formData,
+      dates: updatedDates
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -35,11 +46,25 @@ const ShowForm = ({ onSubmit }) => {
         season: '',
         startDate: new Date(),
         endDate: new Date(),
+        showType: '',
+        dates: []
       });
       if (onSubmit) onSubmit();
     } catch (error) {
       console.error('Error submitting form:', error);
     }
+  };
+
+  const generateDateArray = () => {
+    const { startDate, endDate } = formData;
+    const dates = [];
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      dates.push({ date: d.toISOString().split('T')[0], type: 'regular' });
+    }
+    setFormData({
+      ...formData,
+      dates
+    });
   };
 
   return (
@@ -83,6 +108,25 @@ const ShowForm = ({ onSubmit }) => {
         </select>
       </div>
       <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="showType">
+          Show Type
+        </label>
+        <select
+          name="showType"
+          id="showType"
+          value={formData.showType}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required
+        >
+          <option value="">Select Show Type</option>
+          <option value="gift">Gift</option>
+          <option value="apparel">Apparel</option>
+          <option value="bridal">Bridal</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="startDate">
           Start Date
         </label>
@@ -105,13 +149,41 @@ const ShowForm = ({ onSubmit }) => {
         />
       </div>
       <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button"
+        onClick={generateDateArray}
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
       >
-        Submit
+        Generate Dates
       </button>
-    </form>
-  );
-};
-
-export default ShowForm;
+      {formData.dates.length > 0 && (
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Dates
+          </label>
+          {formData.dates.map((day, index) => (
+            <div key={index} className="flex items-center mb-2">
+              <span className="mr-2">{day.date}</span>
+              <select
+                value={day.type}
+                onChange={(e) => handleDateArrayChange(index, e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              >
+                <option value="regular">Regular</option>
+                <option value="set up">Set Up</option>
+              </select>
+            </div>
+                  ))}
+                  </div>
+                )}
+                <button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Submit
+                </button>
+              </form>
+            );
+          };
+          
+          export default ShowForm;
