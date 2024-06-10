@@ -6,7 +6,11 @@ const StaffForm = ({ onSubmit }) => {
     name: '',
     email: '',
     phone: '',
-    location: 'ATL'
+    location: 'ATL',
+    instagram: '',
+    shoeSize: '',
+    clothesSize: '',
+    college: ''
   });
 
   const handleChange = (e) => {
@@ -25,7 +29,11 @@ const StaffForm = ({ onSubmit }) => {
         name: '',
         email: '',
         phone: '',
-        location: 'ATL'
+        location: 'ATL',
+        instagram: '',
+        shoeSize: '',
+        clothesSize: '',
+        college: ''
       });
       if (onSubmit) onSubmit();
     } catch (error) {
@@ -93,6 +101,58 @@ const StaffForm = ({ onSubmit }) => {
           <option value="LA">LA</option>
           <option value="DAL">DAL</option>
         </select>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="instagram">
+          Instagram @
+        </label>
+        <input
+          type="text"
+          name="instagram"
+          id="instagram"
+          value={formData.instagram}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="shoeSize">
+          Shoe Size
+        </label>
+        <input
+          type="text"
+          name="shoeSize"
+          id="shoeSize"
+          value={formData.shoeSize}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="clothesSize">
+          Clothes Size
+        </label>
+        <input
+          type="text"
+          name="clothesSize"
+          id="clothesSize"
+          value={formData.clothesSize}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="college">
+          College
+        </label>
+        <input
+          type="text"
+          name="college"
+          id="college"
+          value={formData.college}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
       </div>
       <button
         type="submit"

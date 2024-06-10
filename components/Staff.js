@@ -168,6 +168,10 @@ const Staff = () => {
               <p className="text-lg"><strong>Location:</strong> {selectedEntry.location}</p>
               <p className="text-lg"><strong>Phone:</strong> {selectedEntry.phone}</p>
               <p className="text-lg"><strong>Email:</strong> {selectedEntry.email}</p>
+              <p className="text-lg"><strong>Instagram:</strong> {selectedEntry.instagram}</p>
+              <p className="text-lg"><strong>Shoe Size:</strong> {selectedEntry.shoeSize}</p>
+              <p className="text-lg"><strong>Clothes Size:</strong> {selectedEntry.clothesSize}</p>
+              <p className="text-lg"><strong>College:</strong> {selectedEntry.college}</p>
             </div>
             <h3 className="text-xl font-semibold mt-4 mb-4 border-b pb-2">Bookings</h3>
             {bookings.length > 0 ? (
