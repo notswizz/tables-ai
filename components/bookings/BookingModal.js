@@ -21,7 +21,10 @@ const BookingModal = ({ isOpen, onClose, booking }) => {
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    // Adjust the date by subtracting one day
+    const date = new Date(dateString);
+    date.setDate(date.getDate() + 1);
+    return date.toLocaleDateString(undefined, options);
   };
 
   const updateStaffName = async (dayIndex, staffIndex, value) => {
