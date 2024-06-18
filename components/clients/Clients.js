@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
-import Table from './Table';
-import EditableCell from './EditableCell'; // Import EditableCell component
-import CustomModal from './Modal';
-import Filter from './Filter';
+import Table from '../constant/Table';
+import EditableCell from '../constant/EditableCell'; // Import EditableCell component
+import CustomModal from '../constant/Modal';
+import Filter from '../constant/Filter';
 import toast, { Toaster } from 'react-hot-toast'; // Import toast and Toaster
 
 const Clients = () => {

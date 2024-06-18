@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import ClientForm from '../components/ClientForm';
-import StaffForm from '../components/StaffForm';
-import ShowForm from '../components/ShowForm';
-import BookingForm from '../components/BookingForm';
-import Avail from '../components/Avail';
+import ClientForm from '../components/clients/ClientForm';
+import StaffForm from '../components/staff/StaffForm';
+import ShowForm from '../components/shows/ShowForm';
+import BookingForm from '../components/bookings/BookingForm';
+import Avail from '../components/staff/Avail';
 
 const FormPage = () => {
   const [showForm, setShowForm] = useState(false);

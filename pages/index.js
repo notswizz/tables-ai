@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Clients from '../components/Clients';
-import Staff from '../components/Staff';
-import Shows from '../components/Shows';
-import Bookings from '../components/Bookings';
+import Clients from '../components/clients/Clients';
+import Staff from '../components/staff/Staff';
+import Shows from '../components/shows/Shows';
+import Bookings from '../components/bookings/Bookings';
 
 
 const playGearSound = () => {

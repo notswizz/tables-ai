@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
-import Table from './Table';
-import EditableCell from './EditableCell';
-import CustomModal from './Modal';
-import Filter from './Filter';
+import Table from '../constant/Table';
+import EditableCell from '../constant/EditableCell';
+import CustomModal from '../constant/Modal';
+import Filter from '../constant/Filter';
 
 const Staff = () => {
   const [data, setData] = useState([]);
@@ -160,55 +160,70 @@ const Staff = () => {
       <Table columns={columns} data={filteredData} updateData={updateData} onRowClick={handleRowClick} />
 
       <CustomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        {selectedEntry && (
-          <div className="p-4 bg-white rounded-lg shadow-lg max-w-md mx-auto">
-            <div className="border p-4 rounded-lg mb-4">
-              <div className="flex justify-center mb-4">
-                <div className="flex items-center space-x-2">
-                  <div className="text-lg text-gray-700"></div>
-                  <div className="text-lg font-semibold text-gray-900">{selectedEntry.name}</div>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-lg text-gray-700"> <span className="font-semibold text-gray-900">{selectedEntry.location}</span></div>
-                <div className="text-lg text-gray-700"> <span className="font-semibold text-gray-900">{selectedEntry.phone}</span></div>
-                <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.email}</span></div>
-                <div className="text-lg text-gray-700"> <span className="font-semibold text-gray-900">{selectedEntry.instagram}</span></div>
-                <div className="text-lg text-gray-700"><strong>Shoe Size:</strong> <span className="font-semibold text-gray-900">{selectedEntry.shoeSize}</span></div>
-                <div className="text-lg text-gray-700"><strong>Clothes Size:</strong> <span className="font-semibold text-gray-900">{selectedEntry.clothesSize}</span></div>
-                <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.college}</span></div>
-              </div>
-            </div>
-            <h3 className="text-2xl font-semibold mb-4 text-gray-800 border-b pb-2">Bookings</h3>
-            {bookings.length > 0 ? (
-              <div className="overflow-y-auto max-h-64">
-                <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                  <thead className="bg-gray-200">
-                    <tr>
-                      <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Show</th>
-                      <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Client</th>
-                      <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Date Range</th>
-                      <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Total Days</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-300">
-                    {getBookingsForStaff(selectedEntry.name).map((booking, index) => (
-                      <tr key={index}>
-                        <td className="py-2 px-6 text-sm text-gray-700">{booking.show}</td>
-                        <td className="py-2 px-6 text-sm text-gray-700">{booking.client}</td>
-                        <td className="py-2 px-6 text-sm text-gray-700">{booking.dateRange}</td>
-                        <td className="py-2 px-6 text-sm text-gray-700">{booking.totalDays}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p className="text-center text-gray-500">No bookings available.</p>
-            )}
+  {selectedEntry && (
+    <div className="p-4 bg-white rounded-lg shadow-lg max-w-md mx-auto">
+      <div className="border p-4 rounded-lg mb-4">
+        <div className="flex justify-center mb-4">
+          <div className="flex items-center space-x-2">
+            <div className="text-lg text-gray-700"></div>
+            <div className="text-lg font-semibold text-gray-900">{selectedEntry.name}</div>
           </div>
-        )}
-      </CustomModal>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.location}</span></div>
+          <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.phone}</span></div>
+          <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.email}</span></div>
+          <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.instagram}</span></div>
+          <div className="text-lg text-gray-700"><strong>Shoe Size:</strong> <span className="font-semibold text-gray-900">{selectedEntry.shoeSize}</span></div>
+          <div className="text-lg text-gray-700"><strong>Clothes Size:</strong> <span className="font-semibold text-gray-900">{selectedEntry.clothesSize}</span></div>
+          <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.college}</span></div>
+        </div>
+      </div>
+      <div className="border p-4 rounded-lg mb-4">
+        <h3 className="text-xl font-semibold mb-4 text-gray-800">Instagram Profile</h3>
+        <div className="flex justify-center">
+          <iframe 
+            src={`https://instagram.com/${selectedEntry.instagram}/embed`} 
+            width="320" 
+            height="400" 
+            frameBorder="0" 
+            scrolling="no" 
+            allowTransparency="true"
+            className="border rounded-lg"
+          ></iframe>
+        </div>
+      </div>
+      <h3 className="text-2xl font-semibold mb-4 text-gray-800 border-b pb-2">Bookings</h3>
+      {bookings.length > 0 ? (
+        <div className="overflow-y-auto max-h-64">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Show</th>
+                <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Client</th>
+                <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Date Range</th>
+                <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Total Days</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-300">
+              {getBookingsForStaff(selectedEntry.name).map((booking, index) => (
+                <tr key={index}>
+                  <td className="py-2 px-6 text-sm text-gray-700">{booking.show}</td>
+                  <td className="py-2 px-6 text-sm text-gray-700">{booking.client}</td>
+                  <td className="py-2 px-6 text-sm text-gray-700">{booking.dateRange}</td>
+                  <td className="py-2 px-6 text-sm text-gray-700">{booking.totalDays}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="text-center text-gray-500">No bookings available.</p>
+      )}
+    </div>
+  )}
+</CustomModal>
+
     </div>
   );
 };

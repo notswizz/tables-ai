@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
-import Table from './Table';
-import Filter from './Filter';
+import Table from '../constant/Table';
+import Filter from '../constant/Filter';
 
 const Shows = () => {
   const [data, setData] = useState([]);
