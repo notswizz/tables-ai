@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTable } from 'react-table';
+import toast, { Toaster } from 'react-hot-toast';
+
+const playBookSound = () => {
+  const audio = new Audio('/book.mp3');
+  audio.play();
+};
 
 const EditableCell = ({
   value: initialValue,
@@ -15,6 +21,7 @@ const EditableCell = ({
 
   const onBlur = () => {
     updateData(index, id, value);
+    toast.success('Cell updated successfully');
   };
 
   useEffect(() => {
@@ -44,8 +51,14 @@ const Table = ({ columns, data, updateData, onRowClick = () => {} }) => {
     defaultColumn: { Cell: EditableCell }, // Add default Cell renderer
   });
 
+  const handleDetailsClick = (row) => {
+    playBookSound();
+    onRowClick(row);
+  };
+
   return (
     <div className="overflow-x-auto max-h-128">
+      <Toaster />
       <table {...getTableProps()} className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
         <thead className="bg-gradient-to-r from-pink-500 to-pink-600 text-white">
           {headerGroups.map(headerGroup => (
@@ -82,7 +95,7 @@ const Table = ({ columns, data, updateData, onRowClick = () => {} }) => {
                 ))}
                 <td className="py-3 px-6 text-sm text-gray-700 border-b border-gray-200">
                   <button
-                    onClick={() => onRowClick(row)}
+                    onClick={() => handleDetailsClick(row)}
                     className="bg-pink-100 text-pink-600 px-4 py-2 rounded-md border border-pink-500 hover:bg-pink-200 transition-colors duration-200"
                   >
                     Details

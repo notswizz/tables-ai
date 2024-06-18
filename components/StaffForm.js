@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const StaffForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -10,7 +12,8 @@ const StaffForm = ({ onSubmit }) => {
     instagram: '',
     shoeSize: '',
     clothesSize: '',
-    college: ''
+    college: '',
+    availability: []
   });
 
   const handleChange = (e) => {
@@ -18,6 +21,28 @@ const StaffForm = ({ onSubmit }) => {
     setFormData({
       ...formData,
       [name]: value
+    });
+  };
+
+  const handleAvailabilityChange = (date, index, field) => {
+    const newAvailability = [...formData.availability];
+    newAvailability[index] = {
+      ...newAvailability[index],
+      [field]: field === 'date' ? date : e.target.value
+    };
+    setFormData({
+      ...formData,
+      availability: newAvailability
+    });
+  };
+
+  const addAvailability = () => {
+    setFormData({
+      ...formData,
+      availability: [
+        ...formData.availability,
+        { date: new Date(), show: '', available: 'yes' }
+      ]
     });
   };
 
@@ -33,7 +58,8 @@ const StaffForm = ({ onSubmit }) => {
         instagram: '',
         shoeSize: '',
         clothesSize: '',
-        college: ''
+        college: '',
+        availability: []
       });
       if (onSubmit) onSubmit();
     } catch (error) {
@@ -153,6 +179,45 @@ const StaffForm = ({ onSubmit }) => {
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
+      </div>
+      {/* Availability section */}
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Availability
+        </label>
+        {formData.availability.map((availability, index) => (
+          <div key={index} className="mb-2">
+            <DatePicker
+              selected={availability.date}
+              onChange={(date) => handleAvailabilityChange(date, index, 'date')}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <input
+              type="text"
+              name="show"
+              value={availability.show}
+              onChange={(e) => handleAvailabilityChange(e, index, 'show')}
+              placeholder="Show"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <select
+              name="available"
+              value={availability.available}
+              onChange={(e) => handleAvailabilityChange(e, index, 'available')}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addAvailability}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Add Availability
+        </button>
       </div>
       <button
         type="submit"

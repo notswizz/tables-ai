@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from './Table';
-import EditableCell from './EditableCell';
 import Filter from './Filter';
 
 const Shows = () => {
@@ -45,28 +44,91 @@ const Shows = () => {
     return data.filter(row => row.location.toLowerCase().includes(filterText.toLowerCase()));
   }, [data, filterText]);
 
+  const locationOptions = ['ATL', 'NYC', 'LA', 'DAL'];
+  const seasonOptions = ['summer', 'winter', 'fall', 'spring'];
+  const typeOptions = ['gift', 'apparel', 'bridal', 'other'];
+
+  const LocationCell = ({ value: initialValue, row: { index }, column: { id }, updateData }) => {
+    const [value, setValue] = useState(initialValue);
+
+    const onChange = (e) => {
+      setValue(e.target.value);
+      updateData(index, id, e.target.value);
+    };
+
+    return (
+      <select value={value} onChange={onChange} className="border border-gray-300 px-2 py-1 rounded">
+        {locationOptions.map(option => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const SeasonCell = ({ value: initialValue, row: { index }, column: { id }, updateData }) => {
+    const [value, setValue] = useState(initialValue);
+
+    const onChange = (e) => {
+      setValue(e.target.value);
+      updateData(index, id, e.target.value);
+    };
+
+    return (
+      <select value={value} onChange={onChange} className="border border-gray-300 px-2 py-1 rounded">
+        {seasonOptions.map(option => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const TypeCell = ({ value: initialValue, row: { index }, column: { id }, updateData }) => {
+    const [value, setValue] = useState(initialValue);
+
+    const onChange = (e) => {
+      setValue(e.target.value);
+      updateData(index, id, e.target.value);
+    };
+
+    return (
+      <select value={value} onChange={onChange} className="border border-gray-300 px-2 py-1 rounded">
+        {typeOptions.map(option => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
   const columns = useMemo(
     () => [
       {
         Header: 'Location',
         accessor: 'location',
-        Cell: EditableCell,
+        Cell: LocationCell,
       },
       {
         Header: 'Season',
         accessor: 'season',
-        Cell: EditableCell,
+        Cell: SeasonCell,
+      },
+      {
+        Header: 'Show Type',
+        accessor: 'showType',
+        Cell: TypeCell,
       },
       {
         Header: 'Start',
         accessor: 'startDate',
-        Cell: EditableCell,
       },
-     
       {
-        Header: 'Show Type',
-        accessor: 'showType',
-        Cell: EditableCell,
+        Header: 'End',
+        accessor: 'endDate',
       },
     ],
     []

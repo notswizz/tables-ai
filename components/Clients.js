@@ -1,9 +1,10 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from './Table';
-import EditableCell from './EditableCell';
+import EditableCell from './EditableCell'; // Import EditableCell component
 import CustomModal from './Modal';
 import Filter from './Filter';
+import toast, { Toaster } from 'react-hot-toast'; // Import toast and Toaster
 
 const Clients = () => {
   const [data, setData] = useState([]);
@@ -40,15 +41,22 @@ const Clients = () => {
     setData(old =>
       old.map((row, index) => {
         if (index === rowIndex) {
-          const updatedRow = {
-            ...old[rowIndex],
-            [columnId]: value,
-          };
-          axios.put('/api/clients', { _id: updatedRow._id.$oid, ...updatedRow })
-            .catch(error => {
-              console.error('Error updating data:', error);
-            });
-          return updatedRow;
+          const oldValue = old[rowIndex][columnId];
+          if (oldValue !== value) {
+            const updatedRow = {
+              ...old[rowIndex],
+              [columnId]: value,
+            };
+            axios.put('/api/clients', { _id: updatedRow._id.$oid, ...updatedRow })
+              .then(() => {
+                toast.success(`Data updated successfully from "${oldValue}" to "${value}"`);
+              })
+              .catch(error => {
+                toast.error('Error updating data');
+                console.error('Error updating data:', error);
+              });
+            return updatedRow;
+          }
         }
         return row;
       })
@@ -66,7 +74,6 @@ const Clients = () => {
         accessor: 'company',
         Cell: EditableCell,
       },
-      
       {
         Header: 'Phone',
         accessor: 'phone',
@@ -99,9 +106,9 @@ const Clients = () => {
 
   return (
     <div>
+      <Toaster /> {/* Add Toaster component to render toasts */}
       <Filter filterText={filterText} setFilterText={setFilterText} />
       <Table columns={columns} data={filteredData} updateData={updateData} onRowClick={handleRowClick} />
-
       <CustomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedEntry && (
           <div>

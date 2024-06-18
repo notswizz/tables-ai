@@ -161,37 +161,43 @@ const Staff = () => {
 
       <CustomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedEntry && (
-          <div>
-            <h2 className="text-2xl font-bold mb-6 text-center border-b pb-4">Staff Details</h2>
-            <div className="space-y-2 mb-6">
-              <p className="text-lg"><strong>Name:</strong> {selectedEntry.name}</p>
-              <p className="text-lg"><strong>Location:</strong> {selectedEntry.location}</p>
-              <p className="text-lg"><strong>Phone:</strong> {selectedEntry.phone}</p>
-              <p className="text-lg"><strong>Email:</strong> {selectedEntry.email}</p>
-              <p className="text-lg"><strong>Instagram:</strong> {selectedEntry.instagram}</p>
-              <p className="text-lg"><strong>Shoe Size:</strong> {selectedEntry.shoeSize}</p>
-              <p className="text-lg"><strong>Clothes Size:</strong> {selectedEntry.clothesSize}</p>
-              <p className="text-lg"><strong>College:</strong> {selectedEntry.college}</p>
+          <div className="p-4 bg-white rounded-lg shadow-lg max-w-md mx-auto">
+            <div className="border p-4 rounded-lg mb-4">
+              <div className="flex justify-center mb-4">
+                <div className="flex items-center space-x-2">
+                  <div className="text-lg text-gray-700"></div>
+                  <div className="text-lg font-semibold text-gray-900">{selectedEntry.name}</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-lg text-gray-700"> <span className="font-semibold text-gray-900">{selectedEntry.location}</span></div>
+                <div className="text-lg text-gray-700"> <span className="font-semibold text-gray-900">{selectedEntry.phone}</span></div>
+                <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.email}</span></div>
+                <div className="text-lg text-gray-700"> <span className="font-semibold text-gray-900">{selectedEntry.instagram}</span></div>
+                <div className="text-lg text-gray-700"><strong>Shoe Size:</strong> <span className="font-semibold text-gray-900">{selectedEntry.shoeSize}</span></div>
+                <div className="text-lg text-gray-700"><strong>Clothes Size:</strong> <span className="font-semibold text-gray-900">{selectedEntry.clothesSize}</span></div>
+                <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.college}</span></div>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mt-4 mb-4 border-b pb-2">Bookings</h3>
+            <h3 className="text-2xl font-semibold mb-4 text-gray-800 border-b pb-2">Bookings</h3>
             {bookings.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200">
-                  <thead className="bg-gray-100 border-b">
+              <div className="overflow-y-auto max-h-64">
+                <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+                  <thead className="bg-gray-200">
                     <tr>
-                      <th className="py-2 px-4 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Show</th>
-                      <th className="py-2 px-4 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Client</th>
-                      <th className="py-2 px-4 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Date Range</th>
-                      <th className="py-2 px-4 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Total Days</th>
+                      <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Show</th>
+                      <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Client</th>
+                      <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Date Range</th>
+                      <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Total Days</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-300">
                     {getBookingsForStaff(selectedEntry.name).map((booking, index) => (
-                      <tr key={index} className="bg-gray-50">
-                        <td className="py-2 px-4 text-sm text-gray-700">{booking.show}</td>
-                        <td className="py-2 px-4 text-sm text-gray-700">{booking.client}</td>
-                        <td className="py-2 px-4 text-sm text-gray-700">{booking.dateRange}</td>
-                        <td className="py-2 px-4 text-sm text-gray-700">{booking.totalDays}</td>
+                      <tr key={index}>
+                        <td className="py-2 px-6 text-sm text-gray-700">{booking.show}</td>
+                        <td className="py-2 px-6 text-sm text-gray-700">{booking.client}</td>
+                        <td className="py-2 px-6 text-sm text-gray-700">{booking.dateRange}</td>
+                        <td className="py-2 px-6 text-sm text-gray-700">{booking.totalDays}</td>
                       </tr>
                     ))}
                   </tbody>

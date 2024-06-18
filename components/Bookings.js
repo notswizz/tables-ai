@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from './Table';
-import EditableCell from './EditableCell';
 import Filter from './Filter';
 import CustomModal from './Modal';
+import toast, { Toaster } from 'react-hot-toast'; // Import toast and Toaster
 
 const Bookings = () => {
   const [data, setData] = useState([]);
@@ -17,6 +17,7 @@ const Bookings = () => {
         setData(response.data);
       })
       .catch(error => {
+        toast.error('Error fetching data');
         console.error('Error fetching data:', error);
       });
   };
@@ -24,25 +25,6 @@ const Bookings = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const updateData = (rowIndex, columnId, value) => {
-    setData(old =>
-      old.map((row, index) => {
-        if (index === rowIndex) {
-          const updatedRow = {
-            ...old[rowIndex],
-            [columnId]: value,
-          };
-          axios.put('/api/bookings', { _id: updatedRow._id.$oid, ...updatedRow })
-            .catch(error => {
-              console.error('Error updating data:', error);
-            });
-          return updatedRow;
-        }
-        return row;
-      })
-    );
-  };
 
   const filteredData = useMemo(() => {
     return data.filter(row => row.client.toLowerCase().includes(filterText.toLowerCase()));
@@ -53,19 +35,18 @@ const Bookings = () => {
       {
         Header: 'Client',
         accessor: 'client',
-        Cell: EditableCell,
+        Cell: ({ value }) => <div>{value}</div>, // Uneditable cell
       },
       {
         Header: 'Show',
         accessor: 'show',
-        Cell: EditableCell,
+        Cell: ({ value }) => <div>{value}</div>, // Uneditable cell
       },
       {
         Header: 'Days',
         accessor: 'totalStaff',
-        Cell: EditableCell,
+        Cell: ({ value }) => <div>{value}</div>, // Uneditable cell
       },
-     
     ],
     []
   );
@@ -82,8 +63,9 @@ const Bookings = () => {
 
   return (
     <div>
+      <Toaster /> {/* Add Toaster component to render toasts */}
       <Filter filterText={filterText} setFilterText={setFilterText} />
-      <Table columns={columns} data={filteredData} updateData={updateData} onRowClick={handleRowClick} />
+      <Table columns={columns} data={filteredData} onRowClick={handleRowClick} />
 
       <CustomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedBooking && (
