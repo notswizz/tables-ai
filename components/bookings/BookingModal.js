@@ -44,13 +44,11 @@ const BookingModal = ({ isOpen, onClose, booking }) => {
     <CustomModal isOpen={isOpen} onClose={onClose}>
       {localBooking && (
         <div>
-      
           <div className="flex space-x-4 mb-6">
             <p className="text-lg"><strong>Client:</strong> {localBooking.client}</p>
             <p className="text-lg"><strong>Show:</strong> {localBooking.show}</p>
             <p className="text-lg"><strong>Total Days:</strong> {localBooking.totalStaff}</p>
           </div>
-       
           {localBooking.staffNeeded.length > 0 ? (
             <div className="overflow-y-auto max-h-96">
               <table className="min-w-full bg-white border border-gray-200">
@@ -78,6 +76,7 @@ const BookingModal = ({ isOpen, onClose, booking }) => {
                               column={{ id: `staffNames[${staffIndex}]` }}
                               updateData={(index, id, value) => updateStaffName(dayIndex, staffIndex, value)}
                               staffList={staffList}
+                              date={day.date}
                             />
                           ))}
                         </td>

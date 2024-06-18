@@ -179,20 +179,7 @@ const Staff = () => {
           <div className="text-lg text-gray-700"><span className="font-semibold text-gray-900">{selectedEntry.college}</span></div>
         </div>
       </div>
-      <div className="border p-4 rounded-lg mb-4">
-        <h3 className="text-xl font-semibold mb-4 text-gray-800">Instagram Profile</h3>
-        <div className="flex justify-center">
-          <iframe 
-            src={`https://instagram.com/${selectedEntry.instagram}/embed`} 
-            width="320" 
-            height="400" 
-            frameBorder="0" 
-            scrolling="no" 
-            allowTransparency="true"
-            className="border rounded-lg"
-          ></iframe>
-        </div>
-      </div>
+     
       <h3 className="text-2xl font-semibold mb-4 text-gray-800 border-b pb-2">Bookings</h3>
       {bookings.length > 0 ? (
         <div className="overflow-y-auto max-h-64">
