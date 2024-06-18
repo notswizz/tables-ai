@@ -129,7 +129,7 @@ const Clients = () => {
                       <th className="py-2 px-4 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Show</th>
                       <th className="py-2 px-4 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Date Range</th>
                       <th className="py-2 px-4 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Total Days</th>
-                      <th className="py-2 px-4 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Total Staff</th>
+             
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -141,7 +141,7 @@ const Clients = () => {
                         <tr key={booking._id.$oid} className="bg-gray-50">
                           <td className="py-2 px-4 text-sm text-gray-700">{booking.show}</td>
                           <td className="py-2 px-4 text-sm text-gray-700">{startDate} - {endDate}</td>
-                          <td className="py-2 px-4 text-sm text-gray-700">{totalDays}</td>
+                
                           <td className="py-2 px-4 text-sm text-gray-700">{booking.totalStaff}</td>
                         </tr>
                       );

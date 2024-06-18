@@ -3,7 +3,7 @@ import Clients from '../components/clients/Clients';
 import Staff from '../components/staff/Staff';
 import Shows from '../components/shows/Shows';
 import Bookings from '../components/bookings/Bookings';
-
+import Dashboard from '../components/constant/Dashboard'; // Import Dashboard component
 
 const playGearSound = () => {
   const audio = new Audio('/click.wav'); // Use the root-relative path
@@ -12,10 +12,22 @@ const playGearSound = () => {
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('clients');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     playGearSound();
+  };
+
+  const openModal = (booking) => {
+    setSelectedBooking(booking);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedBooking(null);
   };
 
   return (
@@ -59,10 +71,10 @@ const HomePage = () => {
         {activeTab === 'clients' && <Clients />}
         {activeTab === 'staff' && <Staff />}
         {activeTab === 'shows' && <Shows />}
-        {activeTab === 'bookings' && <Bookings />}
+        {activeTab === 'bookings' && <Bookings openModal={openModal} />}
       </div>
 
-   
+      <Dashboard activeTab={activeTab} />
     </div>
   );
 };

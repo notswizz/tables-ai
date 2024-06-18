@@ -188,7 +188,7 @@ const Staff = () => {
               <tr>
                 <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Show</th>
                 <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Client</th>
-                <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Date Range</th>
+         
                 <th className="py-3 px-6 text-left text-sm font-medium text-gray-800 uppercase tracking-wider">Total Days</th>
               </tr>
             </thead>
@@ -197,7 +197,7 @@ const Staff = () => {
                 <tr key={index}>
                   <td className="py-2 px-6 text-sm text-gray-700">{booking.show}</td>
                   <td className="py-2 px-6 text-sm text-gray-700">{booking.client}</td>
-                  <td className="py-2 px-6 text-sm text-gray-700">{booking.dateRange}</td>
+               
                   <td className="py-2 px-6 text-sm text-gray-700">{booking.totalDays}</td>
                 </tr>
               ))}

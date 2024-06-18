@@ -57,7 +57,7 @@ const Table = ({ columns, data, updateData, onRowClick = () => {} }) => {
   };
 
   return (
-    <div className="overflow-x-auto max-h-128">
+    <div className="overflow-x-auto max-h-96">
       <Toaster />
       <table {...getTableProps()} className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
         <thead className="bg-gradient-to-r from-pink-500 to-pink-600 text-white">
